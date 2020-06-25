@@ -70,17 +70,19 @@
 				</execution>
 				</executions>
 				<configuration>
-				<jdbcDriver>org.postgres.Driver</jdbcDriver>
-				<jdbcUrl>jdbc:postgresql:localhost:5433/sandbox</jdbcUrl>
-				<packageName>com.myproject.domain</packageName>
+				<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+				<jdbcUrl>jdbc:postgresql://localhost:5433/sandbox</jdbcUrl>
+				<jdbcUser>eyet</jdbcUser>
+				<jdbcPassword>postgres</jdbcPassword>
+				<packageName>lu.eyet.dev.jdbc-sandbox</packageName>
 				<targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
 				</configuration>
 				<dependencies>
-				<dependency>
-					<groupId>org.apache.derby</groupId>
-					<artifactId>derby</artifactId>
-					<version>${derby.version}</version>
-				</dependency>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>42.1.1</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
