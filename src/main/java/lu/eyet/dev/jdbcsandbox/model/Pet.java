@@ -1,4 +1,4 @@
-package lu.eyet.dev.jdbcsandbox;
+package lu.eyet.dev.jdbcsandbox.model;
 
 import java.time.LocalDate;
 

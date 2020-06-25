@@ -1,10 +1,12 @@
-package lu.eyet.dev.jdbcsandbox;
+package lu.eyet.dev.jdbcsandbox.repository;
 
 import java.util.List;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import lu.eyet.dev.jdbcsandbox.model.Pet;
 
 public interface PetRepository extends CrudRepository<Pet, Long> {
 
