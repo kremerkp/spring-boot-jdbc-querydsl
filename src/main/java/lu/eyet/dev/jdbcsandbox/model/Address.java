@@ -1,8 +1,13 @@
 package lu.eyet.dev.jdbcsandbox.model;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 
-public class Address {
+import lombok.Getter;
+
+@Getter
+public class Address implements Serializable {
 
     @Id
     private Long address_id;

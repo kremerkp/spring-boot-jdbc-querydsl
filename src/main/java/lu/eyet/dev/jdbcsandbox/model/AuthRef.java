@@ -2,12 +2,18 @@ package lu.eyet.dev.jdbcsandbox.model;
 
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("book_author")
-public class AuthRef {
+import lombok.Data;
 
-    public AuthRef(Long id) {
+@Table("book_author")
+public @Data class AuthRef {
+
+    Long author;
+
+    public AuthRef(Long author) {
+        this.author = author;
     }
 
-    private Long author;
+    public AuthRef() {
+    }
 
 }

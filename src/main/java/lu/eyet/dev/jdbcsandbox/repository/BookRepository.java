@@ -5,12 +5,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 
-import lu.eyet.dev.jdbcsandbox.model.Movie;
+import lu.eyet.dev.jdbcsandbox.model.Book;
 
-public interface MovieRepository extends CrudRepository<Movie, Long> {
+public interface BookRepository extends CrudRepository<Book, Long> {
 
-    Iterable<Movie> findAll(Sort sort);
+    Iterable<Book> findAll(Sort sort);
 
-    Page<Movie> findAll(Pageable pageable);
+    Page<Book> findAll(Pageable pageable);
 
 }

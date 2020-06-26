@@ -1,8 +1,12 @@
 package lu.eyet.dev.jdbcsandbox.model;
 
+import java.io.Serializable;
 import java.time.Duration;
 
-public class Rental {
+import lombok.Getter;
+
+@Getter
+public class Rental implements Serializable {
     private Duration duration;
     private Integer price;
 

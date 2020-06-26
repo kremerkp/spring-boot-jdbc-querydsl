@@ -1,24 +1,23 @@
 package lu.eyet.dev.jdbcsandbox.jdbcsandbox;
 
-import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import lu.eyet.dev.jdbcsandbox.model.Author;
 import lu.eyet.dev.jdbcsandbox.model.Book;
-import lu.eyet.dev.jdbcsandbox.model.Movie;
-import lu.eyet.dev.jdbcsandbox.model.Rental;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
 import lu.eyet.dev.jdbcsandbox.repository.MovieRepository;
 
-@SpringBootTest
-public class JdbcOneToOneAndOneToManyTests {
+@RunWith(SpringRunner.class)
+@DataJdbcTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+public class JdbcTests {
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -30,20 +29,8 @@ public class JdbcOneToOneAndOneToManyTests {
     private MovieRepository movieRepository;
 
     @Test
-    @Transactional
-    public void contextLoads() {
-        Set<Rental> rentals = new HashSet<Rental>();
-        rentals.add(new Rental(Duration.ofDays(1), 2));
-        rentals.add(new Rental(Duration.ofDays(2), 3));
-        rentals.add(new Rental(Duration.ofDays(5), 5));
-        Movie movie = new Movie(null, "Pulp Fiction", "desc...", rentals);
-        movieRepository.save(movie);
-        System.out.println(movieRepository.findAll());
-
-    }
-
-    @Test
-    public void testManyToMany() {
+    public void jdbcTest() {
+        System.out.println(bookRepository.findAll());
 
         Author at = new Author();
         at.setName("Martin Walser");

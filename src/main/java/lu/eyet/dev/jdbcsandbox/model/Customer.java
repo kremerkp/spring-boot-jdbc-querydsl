@@ -1,8 +1,13 @@
 package lu.eyet.dev.jdbcsandbox.model;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 
-public class Customer {
+import lombok.Getter;
+
+@Getter
+public class Customer implements Serializable {
 
     @Id
     private Long customer_id;

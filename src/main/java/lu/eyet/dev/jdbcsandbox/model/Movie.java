@@ -1,10 +1,17 @@
 package lu.eyet.dev.jdbcsandbox.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 
-public class Movie {
+import lombok.Getter;
+
+@Getter
+public class Movie implements Serializable {
 
     @Id
     private Long movieId;
@@ -23,6 +30,12 @@ public class Movie {
     public void addRental(Rental rental) {
         this.rental.add(rental);
     }
+
+    @CreatedDate
+    private DateTime createDate;
+
+    @LastModifiedDate
+    private DateTime lastModifiedDate;
 
     @Override
     public String toString() {
