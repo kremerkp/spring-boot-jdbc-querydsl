@@ -7,6 +7,10 @@ import lombok.Getter;
 
 @Getter
 public class Rental implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private Duration duration;
     private Integer price;
 

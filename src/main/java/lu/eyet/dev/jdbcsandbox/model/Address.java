@@ -9,6 +9,10 @@ import lombok.Getter;
 @Getter
 public class Address implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     private Long address_id;
     private String addressLine;

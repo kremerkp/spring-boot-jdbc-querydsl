@@ -8,11 +8,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import lu.eyet.dev.jdbcsandbox.model.Author;
-import lu.eyet.dev.jdbcsandbox.model.Book;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
-import lu.eyet.dev.jdbcsandbox.repository.MovieRepository;
 
 @RunWith(SpringRunner.class)
 @DataJdbcTest
@@ -25,28 +22,25 @@ public class JdbcTests {
     @Autowired
     private BookRepository bookRepository;
 
-    @Autowired
-    private MovieRepository movieRepository;
-
     @Test
     public void jdbcTest() {
-        System.out.println(bookRepository.findAll());
+        // System.out.println(bookRepository.findAll());
 
-        Author at = new Author();
-        at.setName("Martin Walser");
-        authorRepository.save(at);
+        // Author at = new Author();
+        // at.setName("Martin Walser");
+        // authorRepository.save(at);
 
-        Author at2 = new Author();
-        at2.setName("Martin Walser 2");
-        authorRepository.save(at2);
+        // Author at2 = new Author();
+        // at2.setName("Martin Walser 2");
+        // authorRepository.save(at2);
 
-        Book book = new Book();
-        book.setTitle("Ein sterbender Mann");
-        book.setIsbn("12343");
-        book.addAuthor2(at);
-        book.addAuthor2(at2);
+        // Book book = new Book();
+        // book.setTitle("Ein sterbender Mann");
+        // book.setIsbn("12343");
+        // book.addAuthor2(at);
+        // book.addAuthor2(at2);
 
-        bookRepository.save(book);
+        // bookRepository.save(book);
 
     }
 

@@ -7,14 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lu.eyet.dev.jdbcsandbox.model.Book;
-import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
 
 @RestController
 public class BookController {
-
-    @Autowired
-    private AuthorRepository authorRepository;
 
     @Autowired
     private BookRepository bookRepository;

@@ -9,6 +9,10 @@ import lombok.Getter;
 @Getter
 public class Customer implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     private Long customer_id;
     private String name;

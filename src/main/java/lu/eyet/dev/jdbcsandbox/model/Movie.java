@@ -13,6 +13,10 @@ import lombok.Getter;
 @Getter
 public class Movie implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     private Long movieId;
     private String title;

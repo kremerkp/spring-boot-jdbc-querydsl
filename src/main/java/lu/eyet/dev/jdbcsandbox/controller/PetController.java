@@ -2,30 +2,26 @@ package lu.eyet.dev.jdbcsandbox.controller;
 
 import java.util.List;
 
-import com.querydsl.sql.SQLQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lu.eyet.dev.jdbcsandbox.DatabaseConnection;
 import lu.eyet.dev.jdbcsandbox.model.Pet;
 import lu.eyet.dev.jdbcsandbox.repository.PetRepository;
-import lu.eyet.qclasses.QPets;
+import lu.eyet.dev.jdbcsandbox.utilities.ObjectUtilities;
 
 @RestController
 public class PetController {
 
     @Autowired
     private PetRepository petRepository;
-
-    @Autowired
-    DatabaseConnection databaseConnection;
 
     @GetMapping("/pets")
     public Iterable<Pet> getAllPets() {
@@ -53,20 +49,27 @@ public class PetController {
     }
 
     @PostMapping(path = "/editPet", consumes = "application/json", produces = "application/json")
-    public Pet editPat(@RequestBody Pet pet) {
+    public ResponseEntity<Pet> editPat(@RequestBody Pet pet) {
+        Pet resPet = new Pet();
         if (petRepository.existsById(pet.getPetId())) {
-            petRepository.save(pet);
+            Pet accPet = petRepository.findById(pet.getPetId()).get();
+            resPet = ObjectUtilities.combine2Objects2(accPet, pet, new Pet());
+            if (!resPet.equals(accPet)) {
+                petRepository.save(resPet);
+                return new ResponseEntity<Pet>(resPet, HttpStatus.OK);
+            }
         }
-        return pet;
+        return new ResponseEntity<Pet>(resPet, HttpStatus.NOT_MODIFIED);
     }
 
-    @GetMapping("/petNames")
-    public List<String> getAllPetNames() {
-        QPets pets = QPets.pets;
-        SQLQuery<?> q = databaseConnection.pgQuery();
-        List<String> list = q.select(pets.name).from(pets).fetch();
-        return list;
+    // @GetMapping("/petNames")
+    // public List<String> getAllPetNames() {
+    // DatabaseConnection dbConn = new DatabaseConnection();
+    // QPets pets = QPets.pets;
+    // SQLQuery<?> q = dbConn.pgQuery();
+    // List<String> list = q.select(pets.name).from(pets).fetch();
+    // return list;
 
-    }
+    // }
 
 }

@@ -1,9 +1,5 @@
 package lu.eyet.dev.jdbcsandbox.jdbcsandbox;
 
-import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lu.eyet.dev.jdbcsandbox.model.Author;
 import lu.eyet.dev.jdbcsandbox.model.Book;
-import lu.eyet.dev.jdbcsandbox.model.Movie;
-import lu.eyet.dev.jdbcsandbox.model.Rental;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
 import lu.eyet.dev.jdbcsandbox.repository.MovieRepository;
@@ -32,13 +26,13 @@ public class JdbcOneToOneAndOneToManyTests {
     @Test
     @Transactional
     public void contextLoads() {
-        Set<Rental> rentals = new HashSet<Rental>();
-        rentals.add(new Rental(Duration.ofDays(1), 2));
-        rentals.add(new Rental(Duration.ofDays(2), 3));
-        rentals.add(new Rental(Duration.ofDays(5), 5));
-        Movie movie = new Movie(null, "Pulp Fiction", "desc...", rentals);
-        movieRepository.save(movie);
-        System.out.println(movieRepository.findAll());
+        // Set<Rental> rentals = new HashSet<Rental>();
+        // rentals.add(new Rental(Duration.ofDays(1), 2));
+        // rentals.add(new Rental(Duration.ofDays(2), 3));
+        // rentals.add(new Rental(Duration.ofDays(5), 5));
+        // Movie movie = new Movie(null, "Pulp Fiction", "desc...", rentals);
+        // movieRepository.save(movie);
+        // System.out.println(movieRepository.findAll());
 
     }
 
