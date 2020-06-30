@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import lu.eyet.dev.jdbcsandbox.controller.ReportService;
 import lu.eyet.dev.jdbcsandbox.model.Author;
 import lu.eyet.dev.jdbcsandbox.model.Book;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
@@ -22,6 +23,9 @@ public class JdbcOneToOneAndOneToManyTests {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private ReportService reportService;
 
     @Test
     @Transactional

@@ -4,18 +4,24 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.util.Assert;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@JsonIgnoreProperties
+@EqualsAndHashCode
 public class Book implements Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 2L;
     @Id
+    @EqualsAndHashCode.Exclude
     private Long id;
     private String isbn;
     private String title;

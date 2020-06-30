@@ -3,9 +3,14 @@ package lu.eyet.dev.jdbcsandbox.model;
 import java.io.Serializable;
 import java.time.Duration;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@JsonIgnoreProperties
+@EqualsAndHashCode
 public class Rental implements Serializable {
     /**
      *

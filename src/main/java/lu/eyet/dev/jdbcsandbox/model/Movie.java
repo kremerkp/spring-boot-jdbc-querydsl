@@ -3,14 +3,19 @@ package lu.eyet.dev.jdbcsandbox.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@JsonIgnoreProperties
+@EqualsAndHashCode
 public class Movie implements Serializable {
 
     /**
@@ -18,6 +23,7 @@ public class Movie implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     @Id
+    @EqualsAndHashCode.Exclude
     private Long movieId;
     private String title;
     private String description;

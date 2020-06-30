@@ -24,7 +24,7 @@ public class JdbcTests {
 
     @Test
     public void jdbcTest() {
-        // System.out.println(bookRepository.findAll());
+        System.out.println(bookRepository.findAll());
 
         // Author at = new Author();
         // at.setName("Martin Walser");
