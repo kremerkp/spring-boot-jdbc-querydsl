@@ -3,6 +3,8 @@ package lu.eyet.dev.jdbcsandbox.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Table("pets")
+@JsonIgnoreProperties
 @EqualsAndHashCode
 @Data
 public class Pet implements Serializable {
