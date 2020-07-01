@@ -14,14 +14,13 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @JsonIgnoreProperties
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = { "id" })
 public class Book implements Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 2L;
     @Id
-    @EqualsAndHashCode.Exclude
     private Long id;
     private String isbn;
     private String title;

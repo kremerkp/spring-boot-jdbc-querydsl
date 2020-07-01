@@ -1,18 +1,41 @@
 package lu.eyet.dev.jdbcsandbox.jdbcsandbox;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.castor.core.util.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.relational.core.conversion.DbActionExecutionException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import lu.eyet.dev.jdbcsandbox.controller.ReportService;
 import lu.eyet.dev.jdbcsandbox.model.Author;
 import lu.eyet.dev.jdbcsandbox.model.Book;
+import lu.eyet.dev.jdbcsandbox.model.ERole;
+import lu.eyet.dev.jdbcsandbox.model.Role;
+import lu.eyet.dev.jdbcsandbox.model.User;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
 import lu.eyet.dev.jdbcsandbox.repository.MovieRepository;
+import lu.eyet.dev.jdbcsandbox.repository.RoleRepository;
+import lu.eyet.dev.jdbcsandbox.repository.UserRepository;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@DataJdbcTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 public class JdbcOneToOneAndOneToManyTests {
 
     @Autowired
@@ -25,11 +48,27 @@ public class JdbcOneToOneAndOneToManyTests {
     private MovieRepository movieRepository;
 
     @Autowired
-    private ReportService reportService;
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Value("${secure.app.jwtSecret}")
+    private String jwtSecret;
 
     @Test
     @Transactional
     public void contextLoads() {
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12, new SecureRandom());
+        String encodedPassword = bc.encode("secure");
+        System.out.println("************************************");
+        System.out.println(bc.matches("secure", encodedPassword));
+        System.out.println(encodedPassword);
+        System.out.println("************************************");
+
+        String testPass = "$2a$10$/VsO2xwfQmUd8R2pniLwGu8ngo9bDAwwfNKs1kBnimqPe1P9KpotK";
+        System.out.println(bc.matches("myPassword", testPass));
+
         // Set<Rental> rentals = new HashSet<Rental>();
         // rentals.add(new Rental(Duration.ofDays(1), 2));
         // rentals.add(new Rental(Duration.ofDays(2), 3));
@@ -41,6 +80,51 @@ public class JdbcOneToOneAndOneToManyTests {
     }
 
     @Test
+    public void testSecurity() {
+        User user = userRepository.findById(6L).get();
+        System.out.println("******************************");
+
+        System.out.println(jwtSecret);
+
+        List<Role> roleList = new ArrayList<>();
+        user.getUserRoles().forEach(role -> roleList.add(roleRepository.findById(role.getRole()).get()));
+        roleList.forEach(action -> {
+            System.out.println(action.getName());
+        });
+
+        List<GrantedAuthority> authorities = user.getUserRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(roleRepository.findById(role.getRole()).get().getName()))
+                .collect(Collectors.toList());
+
+        Assert.notNull(authorities, "darf nicht null sein");
+
+    }
+
+    @Test
+    public void testUserRoles() {
+
+        Role user_role = roleRepository.findById(ERole.ROLE_USER.getValue()).get();
+        Role moderator_role = roleRepository.findById(ERole.ROLE_MODERATOR.getValue()).get();
+        Role admin_role = roleRepository.findById(ERole.ROLE_ADMIN.getValue()).get();
+
+        User us = new User();
+        us.setEmail("kremerkp@gmail.com");
+        us.setName("Kai Kremer");
+        us.setIslogin(true);
+        us.setPassword(BCrypt.hashpw("myPassword", BCrypt.gensalt()));
+        us.addRoleRef(user_role);
+        us.addRoleRef(moderator_role);
+        us.addRoleRef(admin_role);
+        try {
+            userRepository.save(us);
+        } catch (DbActionExecutionException | DuplicateKeyException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    @Test
+    @Transactional
     public void testManyToMany() {
 
         Author at = new Author();

@@ -1,4 +1,4 @@
-package lu.eyet.dev.jdbcsandbox;
+package lu.eyet.dev.jdbcsandbox.utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

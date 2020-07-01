@@ -6,12 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.springframework.data.annotation.Id;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Data
 @JsonIgnoreProperties
+@Data
 @EqualsAndHashCode
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Author implements Serializable {
 
     /**
@@ -22,18 +28,5 @@ public class Author implements Serializable {
     @EqualsAndHashCode.Exclude
     private Long id;
     private String name;
-
-    public Author() {
-    }
-
-    public Author(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + "}";
-    }
 
 }
