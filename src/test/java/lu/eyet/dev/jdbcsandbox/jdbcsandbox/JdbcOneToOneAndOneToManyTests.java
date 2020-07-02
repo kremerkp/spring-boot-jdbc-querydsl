@@ -29,7 +29,6 @@ import lu.eyet.dev.jdbcsandbox.model.Role;
 import lu.eyet.dev.jdbcsandbox.model.User;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
-import lu.eyet.dev.jdbcsandbox.repository.MovieRepository;
 import lu.eyet.dev.jdbcsandbox.repository.RoleRepository;
 import lu.eyet.dev.jdbcsandbox.repository.UserRepository;
 
@@ -45,9 +44,6 @@ public class JdbcOneToOneAndOneToManyTests {
 
     @Autowired
     private BookRepository bookRepository;
-
-    @Autowired
-    private MovieRepository movieRepository;
 
     @Autowired
     private RoleRepository roleRepository;

@@ -8,16 +8,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
 import lu.eyet.dev.jdbcsandbox.repository.BookRepository;
 
 @RunWith(SpringRunner.class)
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class JdbcTests {
-
-    @Autowired
-    private AuthorRepository authorRepository;
 
     @Autowired
     private BookRepository bookRepository;
