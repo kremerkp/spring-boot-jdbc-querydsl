@@ -24,7 +24,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+
+        User user = userRepository.findByMail(name);
+        List<Role> roles = new ArrayList<>();
+        user.getUserRoles().forEach(role -> roles.add(roleRepository.findById(role.getRole()).get()));
+
+        return UserDetailsImpl.build(user, roles);
+    }
+
+    @Transactional
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByMail(email);
         List<Role> roles = new ArrayList<>();

@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import org.castor.core.util.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -23,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lu.eyet.dev.jdbcsandbox.model.Author;
 import lu.eyet.dev.jdbcsandbox.model.Book;
-import lu.eyet.dev.jdbcsandbox.model.ERole;
 import lu.eyet.dev.jdbcsandbox.model.Role;
 import lu.eyet.dev.jdbcsandbox.model.User;
 import lu.eyet.dev.jdbcsandbox.repository.AuthorRepository;
@@ -36,6 +37,8 @@ import lu.eyet.dev.jdbcsandbox.repository.UserRepository;
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class JdbcOneToOneAndOneToManyTests {
+
+    private static final Logger logger = LoggerFactory.getLogger(JdbcOneToOneAndOneToManyTests.class);
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -80,6 +83,7 @@ public class JdbcOneToOneAndOneToManyTests {
 
     @Test
     public void testSecurity() {
+        logger.info("enter testSecurity");
         User user = userRepository.findById(6L).get();
         System.out.println("******************************");
 
@@ -100,25 +104,28 @@ public class JdbcOneToOneAndOneToManyTests {
     }
 
     @Test
-    public void testUserRoles() {
-
+    public void createUserWithRole() {
+        logger.info("enter createUserWithRole");
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12, new SecureRandom());
         String encodedPassword = bc.encode("secure");
-
-        Role user_role = roleRepository.findById(ERole.ROLE_USER.getValue()).get();
-        Role moderator_role = roleRepository.findById(ERole.ROLE_MODERATOR.getValue()).get();
-        Role admin_role = roleRepository.findById(ERole.ROLE_ADMIN.getValue()).get();
-
+        logger.info("Setting Password to: " + encodedPassword);
         User us = new User();
-        us.setEmail("kremerkp@gmail.com");
-        us.setName("Kai Kremer");
+        us.setEmail("dev@eye-t.lu");
+        us.setName("Dev-Test");
         us.setIslogin(true);
         us.setPassword(encodedPassword);
-        us.addRoleRef(user_role);
-        us.addRoleRef(moderator_role);
-        us.addRoleRef(admin_role);
+        /*
+         * Role user_role = roleRepository.findById(ERole.ROLE_USER.getValue()).get();
+         * Role moderator_role =
+         * roleRepository.findById(ERole.ROLE_MODERATOR.getValue()).get(); Role
+         * admin_role = roleRepository.findById(ERole.ROLE_ADMIN.getValue()).get();
+         * us.addRoleRef(user_role); us.addRoleRef(moderator_role);
+         * us.addRoleRef(admin_role);
+         */
+
         try {
             userRepository.save(us);
+            logger.info("User was saved");
         } catch (DbActionExecutionException | DuplicateKeyException e) {
             System.out.println(e.getMessage());
         }
