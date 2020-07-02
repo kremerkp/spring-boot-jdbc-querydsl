@@ -2,7 +2,7 @@ package lu.eyet.dev.jdbcsandbox.sandbox;
 
 public class GenericSandbox {
 
-    public static void main(String args[]) {
+    public static void test(String args[]) {
         GenericDemoClass<String> test = new GenericDemoClass<String>();
         test.set("Hallo Generic");
 

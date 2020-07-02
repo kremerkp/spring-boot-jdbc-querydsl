@@ -10,4 +10,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     @Query("select * from public.user where email = :email")
     User findByMail(@Param("email") String email);
 
+    @Query("select * from public.user where name = :name")
+    User findByUserName(@Param("name") String name);
+
 }

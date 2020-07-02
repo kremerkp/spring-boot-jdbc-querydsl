@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.castor.core.util.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -103,6 +102,9 @@ public class JdbcOneToOneAndOneToManyTests {
     @Test
     public void testUserRoles() {
 
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12, new SecureRandom());
+        String encodedPassword = bc.encode("secure");
+
         Role user_role = roleRepository.findById(ERole.ROLE_USER.getValue()).get();
         Role moderator_role = roleRepository.findById(ERole.ROLE_MODERATOR.getValue()).get();
         Role admin_role = roleRepository.findById(ERole.ROLE_ADMIN.getValue()).get();
@@ -111,7 +113,7 @@ public class JdbcOneToOneAndOneToManyTests {
         us.setEmail("kremerkp@gmail.com");
         us.setName("Kai Kremer");
         us.setIslogin(true);
-        us.setPassword(BCrypt.hashpw("myPassword", BCrypt.gensalt()));
+        us.setPassword(encodedPassword);
         us.addRoleRef(user_role);
         us.addRoleRef(moderator_role);
         us.addRoleRef(admin_role);
