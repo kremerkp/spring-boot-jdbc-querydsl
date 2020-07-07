@@ -41,6 +41,8 @@ public class Book implements Serializable {
 
         AuthRef authorRef = new AuthRef();
         authorRef.author = author.getId();
+        // TODO #1 test
+
         return authorRef;
     }
 
