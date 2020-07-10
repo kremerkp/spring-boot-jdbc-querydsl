@@ -44,6 +44,8 @@ public class JasperReportServiceTest {
         testReport();
     }
 
+    
+
     public void testReport() throws FileNotFoundException, JRException {
         String outputFile = "C:\\sandbox\\spring-boot-jdbc-querydsl\\src\\main\\resources\\generated_documents\\"
                 + "pets.pdf";
